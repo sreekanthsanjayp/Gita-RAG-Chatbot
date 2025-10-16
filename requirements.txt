@@ -1,0 +1,6 @@
+streamlit
+sentence-transformers
+pinecone-client
+transformers
+torch
+scikit-learn
