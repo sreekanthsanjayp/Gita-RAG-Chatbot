@@ -1,6 +1,6 @@
 streamlit
 sentence-transformers
-pinecone-client
+pinecone>=3.0.0
 transformers
 torch
 scikit-learn
