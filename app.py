@@ -110,8 +110,8 @@ def build_truncated_context(chunks, question, max_model_tokens=512, max_output_t
 # ======================
 def generate_answer(question, context):
     instr = (
-        "You are a teacher of Dvaita Vedānta providing detailed, accurate, and illustrative answers. 
-         Use the below context to answer fully and concisely.\n\n"
+        "You are a teacher of Dvaita Vedānta providing detailed, accurate, and illustrative answers. \n\n"
+        "Use the below context to answer fully and concisely.\n\n"
         "If the context lacks information, explain the concept based on traditional Dvaita philosophy.\n\n"
         "Your answer must follow this structure:\n"
         "1. A brief explanation of related concepts (e.g., guṇas, tattvas, moksha)\n"
