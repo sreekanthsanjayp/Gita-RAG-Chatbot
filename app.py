@@ -17,11 +17,11 @@ def load_reranker():
 
 @st.cache_resource
 def load_generator():
-    return pipeline("text2text-generation", model="google/flan-t5-base")
+    return pipeline("text2text-generation", model="google/flan-t5-large")
 
 @st.cache_resource
 def load_tokenizer():
-    return AutoTokenizer.from_pretrained("google/flan-t5-base")
+    return AutoTokenizer.from_pretrained("google/flan-t5-large")
 
 @st.cache_resource
 def init_pinecone():
@@ -128,10 +128,12 @@ def generate_answer(question, context):
 
     outputs = generator(
         prompt,
-        max_new_tokens=256,
-        do_sample=False,
-        num_beams=6,  # 👈 improved beam width
+        max_new_tokens=128,
+        do_sample=True,
+        top_p=0.9,                  # nucleus sampling to keep quality and diversity
+        num_beams=3,  # 👈 improved beam width
         no_repeat_ngram_size=3,
+        early_stopping=True 
     )
     return textwrap.fill(outputs[0]["generated_text"].strip(), width=100)
 
