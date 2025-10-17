@@ -47,7 +47,7 @@ index = init_pinecone()
 # ======================
 # 🔍 Retrieval + Rerank
 # ======================
-def retrieve_and_rerank(query, top_k=6, final_k=3):
+def retrieve_and_rerank(query, top_k=3, final_k=2):
     query_emb = embedder.encode([query]).tolist()[0]
     results = index.query(vector=query_emb, top_k=top_k, include_metadata=True)
     raw_chunks = [m["metadata"]["text"] for m in results["matches"]]
