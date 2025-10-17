@@ -47,7 +47,7 @@ index = init_pinecone()
 # ======================
 # 🔍 Retrieval + Rerank
 # ======================
-def retrieve_and_rerank(query, top_k=3, final_k=2):
+def retrieve_and_rerank(query, top_k=5, final_k=3):
     query_emb = embedder.encode([query]).tolist()[0]
     results = index.query(vector=query_emb, top_k=top_k, include_metadata=True)
     raw_chunks = [m["metadata"]["text"] for m in results["matches"]]
@@ -115,10 +115,10 @@ def generate_answer(question, context):
         "Using the context below, answer the question thoroughly, as if teaching a sincere student. "
         "If the context lacks information, explain the concept based on traditional Dvaita philosophy.\n\n"
         "Your answer must follow this structure:\n"
-        "1. A clear direct answer\n"
-        "2. A brief explanation of related concepts (e.g., guṇas, tattvas, moksha)\n"
-        "3. A simple example or analogy if appropriate\n"
-        "4. A gentle conclusion or reflection\n\n"
+        "1. A brief explanation of related concepts (e.g., guṇas, tattvas, moksha)\n"
+        "2. A simple example or analogy if appropriate\n"
+        "3. A gentle conclusion or reflection\n\n"
+        "Using the following context, answer the question precisely, providing explanations, examples, and reflections.\n"
         "Avoid vague language. Be concise yet insightful. Maintain a calm, knowledgeable tone — "
         "like a traditional scholar guiding a student on their spiritual journey.\n\n")
 
@@ -128,12 +128,12 @@ def generate_answer(question, context):
 
     outputs = generator(
         prompt,
-        max_new_tokens=128,
-        do_sample=True,
+        max_new_tokens=256,
+        #do_sample=True,
         top_p=0.9,                  # nucleus sampling to keep quality and diversity
         num_beams=3,  # 👈 improved beam width
         no_repeat_ngram_size=3,
-        early_stopping=True 
+        early_stopping=False 
     )
     return textwrap.fill(outputs[0]["generated_text"].strip(), width=100)
 
