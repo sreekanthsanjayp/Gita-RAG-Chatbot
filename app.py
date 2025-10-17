@@ -17,11 +17,11 @@ def load_reranker():
 
 @st.cache_resource
 def load_generator():
-    return pipeline("text2text-generation", model="google/flan-t5-large")
+    return pipeline("text2text-generation", model="google/flan-t5-base")
 
 @st.cache_resource
 def load_tokenizer():
-    return AutoTokenizer.from_pretrained("google/flan-t5-large")
+    return AutoTokenizer.from_pretrained("google/flan-t5-base")
 
 @st.cache_resource
 def init_pinecone():
