@@ -47,7 +47,7 @@ index = init_pinecone()
 # ======================
 # 🔍 Retrieval + Rerank
 # ======================
-def retrieve_and_rerank(query, top_k=5, final_k=3):
+def retrieve_and_rerank(query, top_k=7, final_k=3):
     query_emb = embedder.encode([query]).tolist()[0]
     results = index.query(vector=query_emb, top_k=top_k, include_metadata=True)
     raw_chunks = [m["metadata"]["text"] for m in results["matches"]]
@@ -110,17 +110,16 @@ def build_truncated_context(chunks, question, max_model_tokens=512, max_output_t
 # ======================
 def generate_answer(question, context):
     instr = (
-        "You are a revered teacher of Dvaita Vedānta, known for your clarity, depth, and ability to convey complex "
-        "philosophical truths in a simple manner.\n\n"
-        "Using the context below, answer the question thoroughly, as if teaching a sincere student. "
+        "You are a teacher of Dvaita Vedānta providing detailed, accurate, and illustrative answers. 
+         Use the below context to answer fully and concisely.\n\n"
         "If the context lacks information, explain the concept based on traditional Dvaita philosophy.\n\n"
         "Your answer must follow this structure:\n"
         "1. A brief explanation of related concepts (e.g., guṇas, tattvas, moksha)\n"
         "2. A simple example or analogy if appropriate\n"
         "3. A gentle conclusion or reflection\n\n"
         "Using the following context, answer the question precisely, providing explanations, examples, and reflections.\n"
-        "Avoid vague language. Be concise yet insightful. Maintain a calm, knowledgeable tone — "
-        "like a traditional scholar guiding a student on their spiritual journey.\n\n")
+        "Be concise yet insightful. Maintain a calm, knowledgeable tone — \n\n")
+        
 
 
     prompt = f"{instr}Context:\n{context}\n\nQuestion: {question}\n\nAnswer:\n"
